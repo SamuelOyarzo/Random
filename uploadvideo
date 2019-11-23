@@ -1,0 +1,39 @@
+<video id="video" controls style:="text-align:center;">
+  
+  <script type="text/javascript">
+    var video = document.getElementById("video");
+    var videoSrcInHls = "<?php echo $fila3['url'];  ?>";
+    var videoSrcInMp4 = "<?php echo $fila3['url'];  ?>";
+    var videoSrcInMkv = "<?php echo $fila3['url'];  ?>";
+
+    if(Hls.isSupported()) {
+      var hls = new Hls() ;
+      hls.loadSource(videoSrcInHls);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED,function() {
+        video.play();
+      });
+	}else{
+	  addSourceToVideo(video, videoSrcInMp4, 'video/mp4');
+	  
+      video.play();
+		}
+
+    function addSourceToVideo(element, src, type) {
+      var source = document.createElement('source');
+      source.src = src;
+      source.type = type;
+      element.appendChild(source);
+    }
+   </script>
+</video>
+<?php 
+
+   $video_type = $_FILES['archivo']['type']; 
+   if ($video_type == "ubicacion del video" || $video_type == "video/mpeg" || $video_type == "video/quicktime" || $video_type == "application/vnd.rn-realmedia" || $video_type == "video/x-ms-wmv" || $video_type == "video/mp4" || $video_type == "application/x-shockwave-flash") 
+   { 
+
+   } else { 
+   // Error
+   }    
+?>
