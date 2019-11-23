@@ -1,0 +1,25 @@
+
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+/** Programa que imprime del 1 al 100, para múltiplos de 3, en lugar del número, imprime una palabra "x", Para múltiplos de 5 imprime "y" Para números que son múltiplos de 3 y 5, imprima "xy". 
+**/
+public class xBuzz {
+public static String xy(int number) {
+return IntStream.range(1, number + 1)
+.mapToObj(xBuzz::xy)
+.collect(Collectors.joining(" "));
+}
+
+private static String xy(int number) {
+return new ChainedValidator<>(String.valueOf(number))
+.addChainedValidation(number % 3 == 0, "x")
+.addChainedValidation(number % 5 == 0, "y")
+.addChainedValidation(number % 15 == 0, "xy")
+.firstThatMatches();
+}
+
+public static void main(String[] args) {
+System.out.println(xBuzz.xy(100));
+}
+}
